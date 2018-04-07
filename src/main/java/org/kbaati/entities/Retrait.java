@@ -4,7 +4,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
-@DiscriminatorValue("V")
+@DiscriminatorValue("R")
 public class Retrait extends Operation{
 
 }
