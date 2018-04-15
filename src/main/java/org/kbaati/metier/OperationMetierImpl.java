@@ -2,8 +2,6 @@ package org.kbaati.metier;
 
 import java.util.Date;
 
-import javax.management.RuntimeErrorException;
-
 import org.kbaati.dao.CompteRepository;
 import org.kbaati.dao.EmployeRepository;
 import org.kbaati.dao.OperationRepository;
@@ -13,6 +11,8 @@ import org.kbaati.entities.Operation;
 import org.kbaati.entities.Retrait;
 import org.kbaati.entities.Versement;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -64,6 +64,18 @@ public class OperationMetierImpl implements OperationMetier{
 		retirer(cpte1, montant, codeEmp);
 		verser(cpte2, montant, codeEmp);
 		return true;
+	}
+
+	@Override
+	public PageOperation getOperation(String codeCompte, int page, int size) {
+		Page<Operation> ops=operationRepository.getOperations(codeCompte, new PageRequest(page, size));
+		PageOperation pOp=new PageOperation();
+		pOp.setOperations(ops.getContent());
+		pOp.setNombreOperations(ops.getNumberOfElements());
+		pOp.setPage(ops.getNumber());
+		pOp.setTotalPage(ops.getTotalPages());
+		pOp.setTotalOperations((int) ops.getTotalElements());
+		return pOp;
 	}
 
 }

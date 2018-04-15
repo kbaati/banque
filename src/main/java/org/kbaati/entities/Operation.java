@@ -14,6 +14,9 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSetter;
+
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(length = 2)
@@ -51,12 +54,15 @@ public class Operation implements Serializable{
 	public void setDateOperation(Date dateOperation) {
 		this.dateOperation = dateOperation;
 	}
+	@JsonIgnore
 	public double getMontant() {
 		return montant;
 	}
+	@JsonSetter
 	public void setMontant(double montant) {
 		this.montant = montant;
 	}
+	
 	public Compte getCompte() {
 		return compte;
 	}

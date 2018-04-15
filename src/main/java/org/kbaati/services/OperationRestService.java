@@ -3,6 +3,7 @@ package org.kbaati.services;
 import org.kbaati.entities.Compte;
 import org.kbaati.metier.CompteMetier;
 import org.kbaati.metier.OperationMetier;
+import org.kbaati.metier.PageOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +17,11 @@ public class OperationRestService {
 
 	@Autowired
 	private OperationMetier operationMetier;
+
+	@RequestMapping(value = "/operations", method = RequestMethod.GET)
+	public PageOperation getOperation(@RequestParam String codeCompte,@RequestParam  int page,@RequestParam  int size) {
+		return operationMetier.getOperation(codeCompte, page, size);
+	}
 
 	@RequestMapping(value = "/versement", method = RequestMethod.PUT)
 	public Boolean verser(@RequestParam String code, @RequestParam double montant, @RequestParam Long codeEmp) {
